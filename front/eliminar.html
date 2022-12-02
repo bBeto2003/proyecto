@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar</title>
+</head>
+<body>
+    <h1>Eliminar Registro</h1>
+    <form method="delete" class="form text">
+        <label for="delete" >ID del Cliente </label>
+        <input type="number" id="deleteid" name="deleteid"><br>
+        <label for="delete" >Nombre del Cliente </label>
+        <input type="number" id="deletenombre" name="delete"><br>
+        <button id="delete" type="button">Eliminar</button>
+
+        <div id="aviso" ></div><br><br>
+    </form>
+    <script>
+        const btnE = document.getElementById('delete');
+btnE.addEventListener('click', () => {
+    let id = document.getElementById('deleteid').value;
+    let nombre = document.getElementById('deletenombre').value
+    let result = {
+        id: id,
+        nombre: nombre
+    }
+    console.log(result);
+    fetch('http://localhost:3000/api/contactos/' + id, {
+            method: 'DELETE',
+            body: JSON.stringify(result),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(resultado => {
+            console.log(resultado);
+            if (resultado.message == "Registros eliminados") {
+                let aviso = document.getElementById("aviso");
+                aviso.innerHTML = "Registros eliminados"
+            }
+        })
+});
+    </script>
+</body>
+</html>

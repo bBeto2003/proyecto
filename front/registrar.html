@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarte</title>
+</head>
+<body>
+    <div id="app"><br>
+        <h1>Registro </h1><br>
+        <form action="http://localhost:3000/api/sign-up/" method="post" class="text">
+            <form>
+                <div class="mb-3">
+                    <label for="username" class="form-label" >Username</label> <br>
+                    <input type="text" class="form-control" id="username" placeholder="Escriba su nombre aquí" style="width : 500px;"><br><br>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label" >Password</label><br>
+                        <input type="password" class="form-control" id="password" placeholder="Ingrese la contraseña"><br><br>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password2" class="form-label" >Repeat Password</label><br>
+                        <input type="password" class="form-control" id="password2" placeholder="Repita la contraseña"><br><br>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="enviarR">Enviar</button>
+            </form>
+        </form>
+        </form>
+        <script>
+            //Se agrego asi los script para observar mejor los errores yo estoy consciente que es mejor separado 
+            const btnregistro = document.getElementById("enviarR");
+            btnregistro.addEventListener('click', () => {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            let password2 = document.getElementById("password2").value;
+            let result = {
+                username: username,
+                password: password,
+                password2: password2
+            }
+            fetch('http://localhost:3000/api/sign-up/', {
+            method: 'POST',
+            body: JSON.stringify(result),
+            headers: {
+                'Content-type': 'application/json'
+            }
+            })
+            .then(res => res.json())
+            .then(resultado => {
+            console.log(resultado);
+            if (resultado.message == "registered") {
+                let exito = document.getElementById("exito");
+                exito.innerHTML = "registered"
+                setTimeout(ingreso(), 8000);
+            }
+            })
+        });
+
+        function ingreso() {
+        window.location.replace("./login.html")
+        }
+        </script>
+    </body>
+</html>
